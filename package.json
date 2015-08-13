@@ -1,0 +1,29 @@
+{
+  "name": "router",
+  "version": "3.0.0",
+  "description": "A simple utility to route requests to actions.",
+  "scripts": {
+    "test": "mjnw",
+    "cover": "cover",
+    "jshint": "jshint --c ./.jshintrc --exclude-path ./.jshintignore .",
+    "jscs": "jscs ."
+  },
+  "pre-commit": [
+    "jscs",
+    "jshint",
+    "test"
+  ],
+  "author": "IML Team",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "3.10.1",
+    "path-to-regexp": "1.0.3"
+  },
+  "devDependencies": {
+    "jasmine-n-matchers": "2.0.2",
+    "jscs": "2.1.0",
+    "jshint": "2.8.0",
+    "minijasminenodewrap": "1.0.1",
+    "pre-commit": "1.1.1"
+  }
+}
