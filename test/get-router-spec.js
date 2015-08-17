@@ -138,20 +138,25 @@ describe('Router', function () {
     }
   });
 
-  //var allVerbs = Object.keys(getRouter().verbs).map(function getVerbs (key) {
-  //  return router.verbs[key];
-  //}).concat('all');
-  //allVerbs.forEach(function testVerb (verb) {
-  //  it('should have a convenience for ' + verb, function () {
-  //    var action = jasmine.createSpy('action');
-  //
-  //    router[verb]('/foo/bar/', action);
-  //
-  //    router.go('/foo/bar/', verb, {}, {});
-  //
-  //    expect(action).toHaveBeenCalledOnce();
-  //  });
-  //});
+  var allVerbs = Object.keys(getRouter().verbs).map(function getVerbs (key) {
+    return getRouter().verbs[key];
+  }).concat('all');
+  allVerbs.forEach(function testVerb (verb) {
+    it('should have a convenience for ' + verb, function () {
+      var action = jasmine.createSpy('action');
+
+      router[verb]('/foo/bar/', action);
+
+      router.go('/foo/bar/',
+        {
+          verb: verb
+        },
+        {}
+      );
+
+      expect(action).toHaveBeenCalledOnce();
+    });
+  });
 
   it('should return router from get', function () {
     var r = router.get('/foo/bar/', function () {});
