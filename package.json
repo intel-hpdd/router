@@ -1,6 +1,6 @@
 {
   "name": "@intel-js/router",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
     "test": "mjnw",
@@ -25,5 +25,6 @@
     "jshint": "2.8.0",
     "minijasminenodewrap": "1.0.1",
     "pre-commit": "1.1.1"
-  }
+  },
+  "whitelist": ["jasmine-n-matchers", "minijasminenodewrap"]
 }
