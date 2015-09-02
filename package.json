@@ -1,10 +1,9 @@
 {
   "name": "@intel-js/router",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
-    "test": "mjnw",
-    "cover": "cover",
+    "test": "JASMINE_CONFIG_PATH=jasmine.json NODE_ENV=test jasmine",
     "jshint": "jshint --c ./.jshintrc --exclude-path ./.jshintignore .",
     "jscs": "jscs ."
   },
@@ -23,8 +22,9 @@
     "jasmine-n-matchers": "2.0.2",
     "jscs": "2.1.0",
     "jshint": "2.8.0",
-    "minijasminenodewrap": "1.0.1",
+    "jasmine": "2.3.2",
+    "krusty-jasmine-reporter": "1.0.0",
     "pre-commit": "1.1.1"
   },
-  "whitelist": ["jasmine-n-matchers", "minijasminenodewrap"]
+  "whitelist": ["jasmine-n-matchers", "jasmine", "krusty-jasmine-reporter"]
 }
