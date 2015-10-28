@@ -1,5 +1,5 @@
 {
-  "name": "@intel-js/router",
+  "name": "intel-router",
   "version": "3.0.3",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
@@ -25,6 +25,13 @@
     "jasmine": "2.3.2",
     "krusty-jasmine-reporter": "1.0.0",
     "pre-commit": "1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url" : "https://github.intel.com/IML/router.git"
+  },
+  "publishConfig": {
+    "registry": "https://ubit-artifactory-or.intel.com/artifactory/api/npm/iml-npm-local"
   },
   "whitelist": ["jasmine-n-matchers", "jasmine", "krusty-jasmine-reporter"]
 }
