@@ -1,6 +1,6 @@
 {
   "name": "intel-router",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
     "test": "JASMINE_CONFIG_PATH=jasmine.json NODE_ENV=test jasmine",
@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "jasmine-n-matchers": "2.0.2",
-    "jscs": "2.1.0",
+    "jscs": "2.5.1",
     "jshint": "2.8.0",
     "jasmine": "2.3.2",
     "krusty-jasmine-reporter": "1.0.0",
-    "pre-commit": "1.1.1"
+    "pre-commit": "1.1.2"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,5 @@
   },
   "publishConfig": {
     "registry": "https://ubit-artifactory-or.intel.com/artifactory/api/npm/iml-npm-local"
-  },
-  "whitelist": ["jasmine-n-matchers", "jasmine", "krusty-jasmine-reporter"]
+  }
 }
