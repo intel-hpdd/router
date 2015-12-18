@@ -131,11 +131,38 @@ describe('Router', function () {
   it('should throw if verb is not set', function () {
     router.route('/foo/bar/').get(function () {});
 
-    expect(shouldThrow).toThrow(new Error('Route: /foo/bar/ does not have verb post'));
+    expect(shouldThrow).toThrow(new Error('Route: /foo/bar/ does not match provided routes.'));
 
     function shouldThrow () {
       router.go('/foo/bar/', { verb: 'post' }, {});
     }
+  });
+
+  describe('using a catch all when the same path is defined using a different method', function () {
+    var action, wildcardAction;
+    beforeEach(function () {
+      action = jasmine.createSpy('action');
+      wildcardAction = jasmine.createSpy('wildcardAction');
+
+      router.route('/api/mock').post(action);
+      router.route('(.*)').all(wildcardAction);
+
+      router.go('/api/mock',
+        {
+          verb: 'get',
+          clientReq: { bar: 'baz' }
+        },
+        {}
+      );
+    });
+
+    it('should not catch the post route', function () {
+      expect(action).not.toHaveBeenCalled();
+    });
+
+    it('should route using the wildcard', function () {
+      expect(wildcardAction).toHaveBeenCalledOnce();
+    });
   });
 
   var allVerbs = Object.keys(getRouter().verbs).map(function getVerbs (key) {
