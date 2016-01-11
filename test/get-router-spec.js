@@ -30,31 +30,52 @@ describe('Router', function () {
     expect(action).toHaveBeenCalledOnce();
   });
 
-  it('should call a matched route with request response and next', function () {
-    var action = jasmine.createSpy('action');
+  describe('calling a matched route with request response and next', function () {
+    var action, matches, cb;
+    beforeEach(function () {
+      action = jasmine.createSpy('action').and.callFake(function (req, resp, next) {
+        next(req, resp, {foo: 'bar'});
+      });
+      cb = jasmine.createSpy('cb');
 
-    router.route('/foo/').get(action);
-    router.go('/foo/',
-      {
-        verb: 'get',
-        data: { bar: 'baz' }
-      },
-      {}
-    );
+      router.route('/foo/').get(action);
+      router.go('/foo/',
+        {
+          verb: 'get',
+          data: { bar: 'baz' }
+        },
+        {},
+        cb
+      );
 
-    var matches = ['/foo/'];
-    matches.index = 0;
-    matches.input = '/foo/';
+      matches = ['/foo/'];
+      matches.index = 0;
+      matches.input = '/foo/';
+    });
 
-    expect(action).toHaveBeenCalledOnceWith(
-      {
-        params: {},
-        matches: matches,
-        verb: 'get',
-        data: { bar: 'baz' }
-      },
-      {},
-      jasmine.any(Function));
+    it('should invoke the action', function () {
+      expect(action).toHaveBeenCalledOnceWith(
+        {
+          params: {},
+          matches: matches,
+          verb: 'get',
+          data: { bar: 'baz' }
+        },
+        {},
+        jasmine.any(Function));
+    });
+
+    it('should invoke the callback', function () {
+      expect(cb).toHaveBeenCalledOnceWith({
+          verb: 'get',
+          data: {bar: 'baz'},
+          params: {},
+          matches: matches
+        },
+        {},
+        {foo: 'bar'},
+        jasmine.any(Function));
+    });
   });
 
   it('should handle named parameters', function () {
