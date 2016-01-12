@@ -1,6 +1,6 @@
 {
   "name": "intel-router",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
     "test": "JASMINE_CONFIG_PATH=jasmine.json NODE_ENV=test jasmine",
