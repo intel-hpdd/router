@@ -5,7 +5,7 @@ set -ex
 
 NODE_VERSIONS="
 0.10
-0.12
+4
 stable
 "
 
@@ -14,6 +14,6 @@ do
     nvm use $node_version
     rm -rf node_modules
     npm i
-    npm t
+    npm run test:dev
     mv *results*.xml ../results
 done

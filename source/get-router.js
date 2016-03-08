@@ -1,7 +1,7 @@
 //
 // INTEL CONFIDENTIAL
 //
-// Copyright 2013-2014 Intel Corporation All Rights Reserved.
+// Copyright 2013-2016 Intel Corporation All Rights Reserved.
 //
 // The source code contained or described herein and all documents related
 // to the source code ("Material") are owned by Intel Corporation or its
@@ -19,32 +19,21 @@
 // otherwise. Any license under such intellectual property rights must be
 // express and approved by Intel in writing.
 
-'use strict';
+import pathRegexp from 'path-to-regexp';
+import pipeline from './pipeline';
 
-var format = require('util').format;
-var _ = require('lodash');
-var pathRegexp = require('path-to-regexp');
 var verbs = ['get', 'post', 'put', 'patch', 'delete'];
 var verbsPlusAll = verbs.concat('all');
-var pipeline = require('./pipeline');
 
-module.exports = function getRouter () {
+export default function getRouter () {
   var routes = [];
   var start = [];
   var end = [];
 
-  /**
-   * A router singleton.
-   * @type {{route: Function, go: Function, reset: Function, verbs: Object}}
-   */
+
   var router = {
-    /**
-     * Adds a path to the list of routes.
-     * @param {String} path The path to match.
-     * @returns {Object} A pathRouter object.
-     */
-    route: function addRoute (path) {
-      var route = _.find(routes, { path: path });
+    route (path) {
+      var route = routes.filter(x => x.path === path)[0];
 
       if (route)
         return route.pathRouter;
@@ -63,17 +52,8 @@ module.exports = function getRouter () {
 
       return pathRouter;
     },
-    /**
-     * Goes to the provided path. If not found throws an error.
-     * Takes variable arguments, the first of which is a required path.
-     * @param {String|RegExp} path The router path
-     * @param {Object} req The request object. Must contain a verb string.
-     * @param {Object} resp The response object.
-     * @param {Function} [cb] callback
-     * @throws {Error}
-     */
-    go: function go (path, req, resp, cb) {
-      var matched = routes.some(function findMatch (route) {
+    go (path, req, resp, cb) {
+      const matched = routes.some(route => {
         var routeActions;
 
         var matches = route.regexp.exec(path);
@@ -89,7 +69,7 @@ module.exports = function getRouter () {
         else
           return false;
 
-        req = _.extend({}, req, {
+        req = Object.assign({}, req, {
           params: keysToParams(route.keys, matches),
           matches: matches
         });
@@ -105,40 +85,28 @@ module.exports = function getRouter () {
       });
 
       if (!matched)
-        throw new Error(format('Route: %s does not match provided routes.', path));
+        throw new Error(`Route: ${path} does not match provided routes.`);
 
       function keysToParams (keys, matches) {
-        return keys.reduce(function convertToParams (params, key, index) {
+        return keys.reduce((params, key, index) => {
           params[key.name] = matches[index + 1];
 
           return params;
         }, {});
       }
     },
-    /**
-     * Resets the routes list to an empty state
-     */
-    reset: function reset () {
+
+    reset () {
       routes.length = 0;
       start.length = 0;
       end.length = 0;
     },
-    /**
-     * Adds middleware at the start of the chain.
-     * @param {Function} action
-     * @returns {router}
-     */
-    addStart: function addStart (action) {
+    addStart (action) {
       start.push(action);
 
       return this;
     },
-    /**
-     * Adds middleware at the end of the chain.
-     * @param {Function} action
-     * @returns {router}
-     */
-    addEnd: function addEnd (action) {
+    addEnd (action) {
       end.push(action);
 
       return this;
@@ -159,19 +127,10 @@ module.exports = function getRouter () {
   });
 
   return router;
-};
+}
 
-/**
- * Creates an object that holds route actions corresponding to a given verb.
- * @returns {Object}
- */
 function getAPathRouter () {
-  return verbsPlusAll.reduce(function buildMethods (pathRouter, verb) {
-    /**
-     * Adds an action to the corresponding verb.
-     * @param {Function} action
-     * @returns {Object}
-     */
+  return verbsPlusAll.reduce((pathRouter, verb) => {
     pathRouter[verb] = function verbMapper (action) {
       pathRouter.verbs[verb] = pathRouter.verbs[verb] || [];
       pathRouter.verbs[verb].push(action);

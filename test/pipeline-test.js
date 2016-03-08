@@ -1,22 +1,21 @@
-'use strict';
+import {describe, beforeEach, jasmine, it, expect} from './jasmine';
+import pipeline from '../source/pipeline';
 
-var pipeline = require('../lib/pipeline');
-
-describe('pipeline', function () {
+describe('pipeline', () => {
   var pipe, request, response;
 
-  beforeEach(function () {
+  beforeEach(() => {
     pipe = jasmine.createSpy('pipe');
     request = { bar: 'baz' };
     response = { foo: 'bar' };
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     expect(pipeline).toEqual(jasmine.any(Function));
   });
 
-  it('should call the pipe with req, resp, and next', function () {
-    pipe.and.callFake(function (req, resp, next) {
+  it('should call the pipe with req, resp, and next', () => {
+    pipe.and.callFake((req, resp, next) => {
       next(req, resp);
     });
 
@@ -25,10 +24,10 @@ describe('pipeline', function () {
     expect(pipe).toHaveBeenCalledOnceWith(request, response, jasmine.any(Function));
   });
 
-  it('should handle extra args', function () {
+  it('should handle extra args', () => {
     var spy = jasmine.createSpy('spy');
 
-    pipeline([function (request, response, next) {
+    pipeline([(request, response, next) => {
       next(request, response, {c: 'd'});
     }, spy], request, response);
 

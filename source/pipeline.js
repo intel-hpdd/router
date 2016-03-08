@@ -1,7 +1,7 @@
 //
 // INTEL CONFIDENTIAL
 //
-// Copyright 2013-2014 Intel Corporation All Rights Reserved.
+// Copyright 2013-2016 Intel Corporation All Rights Reserved.
 //
 // The source code contained or described herein and all documents related
 // to the source code ("Material") are owned by Intel Corporation or its
@@ -19,6 +19,22 @@
 // otherwise. Any license under such intellectual property rights must be
 // express and approved by Intel in writing.
 
-'use strict';
 
-module.exports = require('./lib/get-router');
+export default function next () {
+  const args = [].slice.call(arguments, 0);
+  const pipeline = args.shift();
+
+  if (pipeline.length === 0)
+    return;
+
+  const pipe = pipeline[0];
+
+  const rest = pipeline.slice(1);
+
+  function nextPipe () {
+    const args = [].slice.call(arguments, 0);
+    next.apply(null, [rest].concat(args));
+  }
+
+  pipe.apply(null, args.concat(nextPipe));
+}
