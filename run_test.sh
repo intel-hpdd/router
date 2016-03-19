@@ -14,6 +14,6 @@ do
     nvm use $node_version
     rm -rf node_modules
     npm i
-    npm run test:dev
+    npm run cover -- --reporter=cobertura
     mv *results*.xml ../results
 done
