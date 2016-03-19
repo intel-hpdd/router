@@ -23,7 +23,7 @@ if (process.env.RUNNER === 'CI') {
 jasmine.loadConfig({
   spec_dir: 'dist/test',
   spec_files: [
-    '**/*.js'
+    '**/*-test.js'
   ],
   random: true
 });
