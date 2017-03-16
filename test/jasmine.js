@@ -1,2 +1,2 @@
-const {describe, beforeEach, afterEach, it, expect, jasmine} = global;
-export {describe, beforeEach, afterEach, it, expect, jasmine};
+const { describe, beforeEach, afterEach, it, expect, jasmine } = global;
+export { describe, beforeEach, afterEach, it, expect, jasmine };

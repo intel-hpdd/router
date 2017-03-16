@@ -1,7 +1,7 @@
 //
 // INTEL CONFIDENTIAL
 //
-// Copyright 2013-2016 Intel Corporation All Rights Reserved.
+// Copyright 2013-2017 Intel Corporation All Rights Reserved.
 //
 // The source code contained or described herein and all documents related
 // to the source code ("Material") are owned by Intel Corporation or its
@@ -22,24 +22,22 @@
 import pathRegexp from 'path-to-regexp';
 import pipeline from './pipeline';
 
-var verbs = ['get', 'post', 'put', 'patch', 'delete'];
-var verbsPlusAll = verbs.concat('all');
+const verbs = ['get', 'post', 'put', 'patch', 'delete'];
+const verbsPlusAll = verbs.concat('all');
 
-export default function getRouter () {
-  var routes = [];
-  var start = [];
-  var end = [];
+export default function getRouter() {
+  const routes = [];
+  const start = [];
+  const end = [];
 
+  const router = {
+    route(path) {
+      let route = routes.filter(x => x.path === path)[0];
 
-  var router = {
-    route (path) {
-      var route = routes.filter(x => x.path === path)[0];
+      if (route) return route.pathRouter;
 
-      if (route)
-        return route.pathRouter;
-
-      var keys = [];
-      var pathRouter = getAPathRouter();
+      const keys = [];
+      const pathRouter = getAPathRouter();
 
       route = {
         path: path,
@@ -52,15 +50,15 @@ export default function getRouter () {
 
       return pathRouter;
     },
-    go (path, req, resp, cb) {
+    go(path, req, resp, cb) {
       const matched = routes.some(route => {
-        var routeActions;
+        let routeActions;
 
-        var matches = route.regexp.exec(path);
+        const matches = route.regexp.exec(path);
 
         if (!matches) return false;
 
-        var verb = req.verb.toLowerCase();
+        const verb = req.verb.toLowerCase();
 
         if (route.pathRouter.verbs[verb] != null)
           routeActions = route.pathRouter.verbs[verb];
@@ -74,10 +72,9 @@ export default function getRouter () {
           matches: matches
         });
 
-        var pipes = start.concat(routeActions).concat(end);
+        let pipes = start.concat(routeActions).concat(end);
 
-        if (typeof cb === 'function')
-          pipes = pipes.concat(cb);
+        if (typeof cb === 'function') pipes = pipes.concat(cb);
 
         pipeline(pipes, req, resp);
 
@@ -87,39 +84,45 @@ export default function getRouter () {
       if (!matched)
         throw new Error(`Route: ${path} does not match provided routes.`);
 
-      function keysToParams (keys, matches) {
-        return keys.reduce((params, key, index) => {
-          params[key.name] = matches[index + 1];
+      function keysToParams(keys, matches) {
+        return keys.reduce(
+          (params, key, index) => {
+            params[key.name] = matches[index + 1];
 
-          return params;
-        }, {});
+            return params;
+          },
+          {}
+        );
       }
     },
 
-    reset () {
+    reset() {
       routes.length = 0;
       start.length = 0;
       end.length = 0;
     },
-    addStart (action) {
+    addStart(action) {
       start.push(action);
 
       return this;
     },
-    addEnd (action) {
+    addEnd(action) {
       end.push(action);
 
       return this;
     },
-    verbs: verbs.reduce(function buildVerbObject (verbs, verb) {
-      verbs[verb.toUpperCase()] = verb;
+    verbs: verbs.reduce(
+      function buildVerbObject(verbs, verb) {
+        verbs[verb.toUpperCase()] = verb;
 
-      return verbs;
-    }, {})
+        return verbs;
+      },
+      {}
+    )
   };
 
-  verbsPlusAll.forEach(function addVerbToRouter (verb) {
-    router[verb] = function addVerbToRouterInner (path, action) {
+  verbsPlusAll.forEach(function addVerbToRouter(verb) {
+    router[verb] = function addVerbToRouterInner(path, action) {
       router.route(path)[verb](action);
 
       return this;
@@ -129,15 +132,18 @@ export default function getRouter () {
   return router;
 }
 
-function getAPathRouter () {
-  return verbsPlusAll.reduce((pathRouter, verb) => {
-    pathRouter[verb] = function verbMapper (action) {
-      pathRouter.verbs[verb] = pathRouter.verbs[verb] || [];
-      pathRouter.verbs[verb].push(action);
+function getAPathRouter() {
+  return verbsPlusAll.reduce(
+    (pathRouter, verb) => {
+      pathRouter[verb] = function verbMapper(action) {
+        pathRouter.verbs[verb] = pathRouter.verbs[verb] || [];
+        pathRouter.verbs[verb].push(action);
+
+        return pathRouter;
+      };
 
       return pathRouter;
-    };
-
-    return pathRouter;
-  }, { verbs: {} });
+    },
+    { verbs: {} }
+  );
 }

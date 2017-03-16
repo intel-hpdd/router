@@ -1,10 +1,17 @@
 'use strict';
 
 import getRouter from '../source/get-router';
-import {describe, beforeEach, afterEach, jasmine, it, expect} from './jasmine';
+import {
+  describe,
+  beforeEach,
+  afterEach,
+  jasmine,
+  it,
+  expect
+} from './jasmine';
 
 describe('Router', () => {
-  var router;
+  let router;
 
   beforeEach(() => {
     router = getRouter();
@@ -23,7 +30,7 @@ describe('Router', () => {
   });
 
   it('should go to a matched route', () => {
-    var action = jasmine.createSpy('action');
+    const action = jasmine.createSpy('action');
 
     router.route('/foo/').get(action);
     router.go('/foo/', { verb: 'get' }, {});
@@ -32,15 +39,16 @@ describe('Router', () => {
   });
 
   describe('calling a matched route with request response and next', () => {
-    var action, matches, cb;
+    let action, matches, cb;
     beforeEach(() => {
       action = jasmine.createSpy('action').and.callFake((req, resp, next) => {
-        next(req, resp, {foo: 'bar'});
+        next(req, resp, { foo: 'bar' });
       });
       cb = jasmine.createSpy('cb');
 
       router.route('/foo/').get(action);
-      router.go('/foo/',
+      router.go(
+        '/foo/',
         {
           verb: 'get',
           data: { bar: 'baz' }
@@ -63,61 +71,69 @@ describe('Router', () => {
           data: { bar: 'baz' }
         },
         {},
-        jasmine.any(Function));
+        jasmine.any(Function)
+      );
     });
 
     it('should invoke the callback', () => {
       expect(cb).toHaveBeenCalledOnceWith(
         {
           verb: 'get',
-          data: {bar: 'baz'},
+          data: { bar: 'baz' },
           params: {},
           matches: matches
         },
         {},
-        {foo: 'bar'},
-        jasmine.any(Function));
+        { foo: 'bar' },
+        jasmine.any(Function)
+      );
     });
   });
 
   it('should handle named parameters', () => {
-    var action = jasmine.createSpy('action');
+    const action = jasmine.createSpy('action');
 
     router.route('/host/:id').get(action);
     router.go('/host/1/', { verb: 'get' }, {});
 
-    var matches = ['/host/1/', '1'];
+    const matches = ['/host/1/', '1'];
     matches.index = 0;
     matches.input = '/host/1/';
 
-    expect(action).toHaveBeenCalledOnceWith({
-      params: { id: '1' },
-      matches: matches,
-      verb: 'get'
-    }, {},
-    jasmine.any(Function));
+    expect(action).toHaveBeenCalledOnceWith(
+      {
+        params: { id: '1' },
+        matches: matches,
+        verb: 'get'
+      },
+      {},
+      jasmine.any(Function)
+    );
   });
 
   it('should handle regexp parameters', () => {
-    var action = jasmine.createSpy('action');
+    const action = jasmine.createSpy('action');
 
     router.route(/^\/host\/(\d+)$/).get(action);
     router.go('/host/1', { verb: 'get' }, {});
 
-    var matches = ['/host/1', '1'];
+    const matches = ['/host/1', '1'];
     matches.index = 0;
     matches.input = '/host/1';
 
-    expect(action).toHaveBeenCalledOnceWith({
-      params: { 0: '1' },
-      matches: matches,
-      verb: 'get'
-    }, {},
-    jasmine.any(Function));
+    expect(action).toHaveBeenCalledOnceWith(
+      {
+        params: { 0: '1' },
+        matches: matches,
+        verb: 'get'
+      },
+      {},
+      jasmine.any(Function)
+    );
   });
 
   it('should have an all method', () => {
-    var action = jasmine.createSpy('action');
+    const action = jasmine.createSpy('action');
 
     router.route('/foo/bar').all(action);
     router.go('/foo/bar', { verb: 'post' }, {});
@@ -126,7 +142,7 @@ describe('Router', () => {
   });
 
   it('should match a route with a trailing slash', () => {
-    var action = jasmine.createSpy('action');
+    const action = jasmine.createSpy('action');
 
     router.route('/foo/bar').get(action);
     router.go('/foo/bar/', { verb: 'get' }, {});
@@ -135,7 +151,7 @@ describe('Router', () => {
   });
 
   it('should match a wildcard route', () => {
-    var action = jasmine.createSpy('action');
+    const action = jasmine.createSpy('action');
 
     router.route('/(.*)').get(action);
     router.go('/foo/bar/', { verb: 'get' }, {});
@@ -144,9 +160,11 @@ describe('Router', () => {
   });
 
   it('should throw if route does not match', () => {
-    expect(shouldThrow).toThrow(new Error('Route: /foo/bar/ does not match provided routes.'));
+    expect(shouldThrow).toThrow(
+      new Error('Route: /foo/bar/ does not match provided routes.')
+    );
 
-    function shouldThrow () {
+    function shouldThrow() {
       router.go('/foo/bar/', { verb: 'get' }, {});
     }
   });
@@ -154,15 +172,17 @@ describe('Router', () => {
   it('should throw if verb is not set', () => {
     router.route('/foo/bar/').get(() => {});
 
-    expect(shouldThrow).toThrow(new Error('Route: /foo/bar/ does not match provided routes.'));
+    expect(shouldThrow).toThrow(
+      new Error('Route: /foo/bar/ does not match provided routes.')
+    );
 
-    function shouldThrow () {
+    function shouldThrow() {
       router.go('/foo/bar/', { verb: 'post' }, {});
     }
   });
 
   describe('using a catch all when the same path is defined using a different method', () => {
-    var action, wildcardAction;
+    let action, wildcardAction;
     beforeEach(() => {
       action = jasmine.createSpy('action');
       wildcardAction = jasmine.createSpy('wildcardAction');
@@ -170,7 +190,8 @@ describe('Router', () => {
       router.route('/api/mock').post(action);
       router.route('(.*)').all(wildcardAction);
 
-      router.go('/api/mock',
+      router.go(
+        '/api/mock',
         {
           verb: 'get',
           clientReq: { bar: 'baz' }
@@ -188,16 +209,19 @@ describe('Router', () => {
     });
   });
 
-  var allVerbs = Object.keys(getRouter().verbs).map(function getVerbs (key) {
-    return getRouter().verbs[key];
-  }).concat('all');
-  allVerbs.forEach(function testVerb (verb) {
+  const allVerbs = Object.keys(getRouter().verbs)
+    .map(function getVerbs(key) {
+      return getRouter().verbs[key];
+    })
+    .concat('all');
+  allVerbs.forEach(function testVerb(verb) {
     it('should have a convenience for ' + verb, () => {
-      var action = jasmine.createSpy('action');
+      const action = jasmine.createSpy('action');
 
       router[verb]('/foo/bar/', action);
 
-      router.go('/foo/bar/',
+      router.go(
+        '/foo/bar/',
         {
           verb: verb
         },
@@ -209,41 +233,42 @@ describe('Router', () => {
   });
 
   it('should return router from get', () => {
-    var r = router.get('/foo/bar/', () => {});
+    const r = router.get('/foo/bar/', () => {});
 
     expect(r).toBe(router);
   });
 
   it('should place an ack on the response if one is provided', () => {
-    var action = jasmine.createSpy('action');
+    const action = jasmine.createSpy('action');
 
     router.route('/host/:id').get(action);
-    router.go('/host/1/', { verb: 'get' }, { ack:  () => {} });
+    router.go('/host/1/', { verb: 'get' }, { ack: () => {} });
 
-    var matches = ['/host/1/', '1'];
+    const matches = ['/host/1/', '1'];
     matches.index = 0;
     matches.input = '/host/1/';
 
-    expect(action).toHaveBeenCalledOnceWith({
-      params: { id: '1' },
-      matches: matches,
-      verb: 'get'
-    }, {
-      ack: jasmine.any(Function)
-    },
-    jasmine.any(Function));
+    expect(action).toHaveBeenCalledOnceWith(
+      {
+        params: { id: '1' },
+        matches: matches,
+        verb: 'get'
+      },
+      {
+        ack: jasmine.any(Function)
+      },
+      jasmine.any(Function)
+    );
   });
 
   describe('the all method', () => {
-    var action, getAction;
+    let action, getAction;
 
     beforeEach(() => {
       action = jasmine.createSpy('action');
       getAction = jasmine.createSpy('getAction');
 
-      router.route('/foo/bar')
-        .get(getAction)
-        .all(action);
+      router.route('/foo/bar').get(getAction).all(action);
       router.go('/foo/bar', { verb: 'post' }, {});
     });
 
@@ -257,7 +282,7 @@ describe('Router', () => {
   });
 
   describe('routing in order', () => {
-    var fooAction, wildcardAction;
+    let fooAction, wildcardAction;
 
     beforeEach(() => {
       fooAction = jasmine.createSpy('fooAction');
@@ -279,10 +304,11 @@ describe('Router', () => {
   });
 
   describe('adding routes', () => {
-    var fooAction1, fooAction2;
+    let fooAction1, fooAction2;
 
     beforeEach(() => {
-      fooAction1 = jasmine.createSpy('fooAction1')
+      fooAction1 = jasmine
+        .createSpy('fooAction1')
         .and.callFake((req, resp, next) => {
           next(req, resp);
         });
@@ -303,22 +329,23 @@ describe('Router', () => {
   });
 
   describe('route middleware', () => {
-    var beforeAction, middleAction, afterAction, callNext;
+    let beforeAction, middleAction, afterAction, callNext;
 
     beforeEach(() => {
       beforeAction = jasmine.createSpy('beforeAction');
       middleAction = jasmine.createSpy('middleAction');
       afterAction = jasmine.createSpy('afterAction');
 
-      callNext = function callNext (spy) {
-        var args = spy.calls.mostRecent().args;
+      callNext = function callNext(spy) {
+        const args = spy.calls.mostRecent().args;
         args[2](args[0], args[1]);
       };
 
       router
         .addStart(beforeAction)
         .addEnd(afterAction)
-        .route('/foo/bar/').get(middleAction);
+        .route('/foo/bar/')
+        .get(middleAction);
       router.go('/foo/bar/', { verb: 'get' }, {});
     });
 

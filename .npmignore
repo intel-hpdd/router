@@ -3,10 +3,13 @@ node_modules
 .eslintignore
 .editorconfig
 .eslintrc
-.jscsrc
 .flowconfig
 .babelrc
 .gitignore
+yarn.lock
+setup-jasmine-env.js
+*.log
+run_test.sh
+readme.md
 /test
-/source
 /coverage
