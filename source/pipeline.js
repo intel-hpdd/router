@@ -19,21 +19,16 @@
 // otherwise. Any license under such intellectual property rights must be
 // express and approved by Intel in writing.
 
-export default function next() {
-  const args = [].slice.call(arguments, 0);
+export default function next(...args) {
   const pipeline = args.shift();
 
-  function nextPipe(rest) {
-    return function() {
-      const args = [].slice.call(arguments, 0);
-      next.apply(null, [rest].concat(args));
-    };
-  }
-
   if (pipeline.length > 0) {
-    const pipe = pipeline[0];
-    const rest = pipeline.slice(1);
+    const [pipe, ...rest] = pipeline;
 
-    pipe.apply(null, args.concat(nextPipe(rest)));
+    const nextPipe = (...args) => {
+      next(...[rest, ...args]);
+    };
+
+    pipe(...[...args, nextPipe]);
   }
 }
