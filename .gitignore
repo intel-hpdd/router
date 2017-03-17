@@ -1,8 +1,5 @@
-node_modules
+/node_modules
 *.iml
-*.idea
 *.log
-dist
-npm-debug.log
-coverage
+/coverage
 .nyc_output
