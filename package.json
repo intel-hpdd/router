@@ -1,6 +1,6 @@
 {
   "name": "@iml/router",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "main": "source/get-router.js",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
