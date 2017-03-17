@@ -23,16 +23,17 @@ export default function next() {
   const args = [].slice.call(arguments, 0);
   const pipeline = args.shift();
 
-  if (pipeline.length === 0) return;
-
-  const pipe = pipeline[0];
-
-  const rest = pipeline.slice(1);
-
-  function nextPipe() {
-    const args = [].slice.call(arguments, 0);
-    next.apply(null, [rest].concat(args));
+  function nextPipe(rest) {
+    return function() {
+      const args = [].slice.call(arguments, 0);
+      next.apply(null, [rest].concat(args));
+    };
   }
 
-  pipe.apply(null, args.concat(nextPipe));
+  if (pipeline.length > 0) {
+    const pipe = pipeline[0];
+    const rest = pipeline.slice(1);
+
+    pipe.apply(null, args.concat(nextPipe(rest)));
+  }
 }
