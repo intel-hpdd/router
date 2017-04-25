@@ -1,5 +1,5 @@
 {
-  "name": "@iml/router",
+  "name": "@mfl/router",
   "version": "6.0.1",
   "main": "source/get-router.js",
   "description": "A simple utility to route requests to actions.",
@@ -20,10 +20,10 @@
       "/test"
     ],
     "transformIgnorePatterns": [
-      "/node_modules/(?!@iml)/"
+      "/node_modules/(?!@mfl)/"
     ]
   },
-  "author": "IML Team",
+  "author": "MFL Team",
   "license": "MIT",
   "dependencies": {
     "path-to-regexp": "1.7.0"
@@ -36,7 +36,7 @@
     "eslint-plugin-flowtype": "^2.30.3",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-prettier": "2.0.1",
-    "intel-jasmine-n-matchers": "2.1.1",
+    "@mfl/jasmine-n-matchers": "2.1.1",
     "jasmine-reporters": "2.2.0",
     "jest": "19.0.2",
     "pre-commit": "1.2.2",
@@ -44,9 +44,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.intel.com/IML/router.git"
+    "url": "https://github.intel.com/MFL/router.git"
   },
   "publishConfig": {
-    "registry": "https://ubit-artifactory-or.intel.com/artifactory/api/npm/iml-npm-local"
+    "access": "public"
   }
 }
