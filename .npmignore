@@ -7,7 +7,6 @@ node_modules
 .babelrc
 .gitignore
 yarn.lock
-setup-jasmine-env.js
 *.log
 run_test.sh
 readme.md
