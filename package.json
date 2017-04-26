@@ -13,10 +13,8 @@
     "test"
   ],
   "jest": {
-    "setupTestFrameworkScriptFile": "./setup-jasmine-env.js",
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/setup-jasmine-env.js",
       "/test"
     ],
     "transformIgnorePatterns": [
@@ -29,18 +27,17 @@
     "path-to-regexp": "1.7.0"
   },
   "devDependencies": {
-    "babel-eslint": "7.1.1",
-    "babel-preset-env": "1.2.2",
-    "eslint": "3.17.1",
-    "eslint-config-prettier": "1.5.0",
+    "@mfl/jasmine-n-matchers": "2.1.1",
+    "babel-eslint": "7.2.3",
+    "babel-preset-env": "1.4.0",
+    "eslint": "3.19.0",
+    "eslint-config-prettier": "1.7.0",
     "eslint-plugin-flowtype": "^2.30.3",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-prettier": "2.0.1",
-    "@mfl/jasmine-n-matchers": "2.1.1",
-    "jasmine-reporters": "2.2.0",
     "jest": "19.0.2",
     "pre-commit": "1.2.2",
-    "prettier": "0.22.0"
+    "prettier": "1.2.2"
   },
   "repository": {
     "type": "git",

@@ -64,8 +64,7 @@ export default function getRouter() {
           routeActions = route.pathRouter.verbs[verb];
         else if (route.pathRouter.verbs.all != null)
           routeActions = route.pathRouter.verbs.all;
-        else
-          return false;
+        else return false;
 
         req = Object.assign({}, req, {
           params: keysToParams(route.keys, matches),
@@ -85,14 +84,11 @@ export default function getRouter() {
         throw new Error(`Route: ${path} does not match provided routes.`);
 
       function keysToParams(keys, matches) {
-        return keys.reduce(
-          (params, key, index) => {
-            params[key.name] = matches[index + 1];
+        return keys.reduce((params, key, index) => {
+          params[key.name] = matches[index + 1];
 
-            return params;
-          },
-          {}
-        );
+          return params;
+        }, {});
       }
     },
 
@@ -111,14 +107,11 @@ export default function getRouter() {
 
       return this;
     },
-    verbs: verbs.reduce(
-      function buildVerbObject(verbs, verb) {
-        verbs[verb.toUpperCase()] = verb;
+    verbs: verbs.reduce(function buildVerbObject(verbs, verb) {
+      verbs[verb.toUpperCase()] = verb;
 
-        return verbs;
-      },
-      {}
-    )
+      return verbs;
+    }, {})
   };
 
   verbsPlusAll.forEach(function addVerbToRouter(verb) {
