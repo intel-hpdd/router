@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@mfl/jasmine-n-matchers@2.1.1":
+"@iml/jasmine-n-matchers@2.1.1":
   version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@mfl/jasmine-n-matchers/-/jasmine-n-matchers-2.1.1.tgz#bf4ab1d4fff38152b1253bb9619e7e5e814926c6"
+  resolved "https://registry.yarnpkg.com/@iml/jasmine-n-matchers/-/jasmine-n-matchers-2.1.1.tgz#bf4ab1d4fff38152b1253bb9619e7e5e814926c6"
 
 abab@^1.0.3:
   version "1.0.3"

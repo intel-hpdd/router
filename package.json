@@ -1,5 +1,5 @@
 {
-  "name": "@mfl/router",
+  "name": "@iml/router",
   "version": "6.0.1",
   "main": "source/get-router.js",
   "description": "A simple utility to route requests to actions.",
@@ -18,16 +18,16 @@
       "/test"
     ],
     "transformIgnorePatterns": [
-      "/node_modules/(?!@mfl)/"
+      "/node_modules/(?!@iml)/"
     ]
   },
-  "author": "MFL Team",
+  "author": "IML Team",
   "license": "MIT",
   "dependencies": {
     "path-to-regexp": "1.7.0"
   },
   "devDependencies": {
-    "@mfl/jasmine-n-matchers": "2.1.1",
+    "@iml/jasmine-n-matchers": "2.1.1",
     "babel-eslint": "7.2.3",
     "babel-preset-env": "1.4.0",
     "eslint": "3.19.0",
