@@ -8,18 +8,10 @@
     "eslint": "eslint ./",
     "cover": "NODE_ENV=test yarn test -- --coverage"
   },
-  "pre-commit": [
-    "eslint",
-    "test"
-  ],
+  "pre-commit": ["eslint", "test"],
   "jest": {
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test"
-    ],
-    "transformIgnorePatterns": [
-      "/node_modules/(?!@iml)/"
-    ]
+    "coveragePathIgnorePatterns": ["/node_modules/", "/test"],
+    "transformIgnorePatterns": ["/node_modules/(?!@iml)/"]
   },
   "author": "IML Team",
   "license": "MIT",
@@ -29,15 +21,15 @@
   "devDependencies": {
     "@iml/jasmine-n-matchers": "2.1.1",
     "babel-eslint": "7.2.3",
-    "babel-preset-env": "1.4.0",
-    "eslint": "3.19.0",
-    "eslint-config-prettier": "1.7.0",
-    "eslint-plugin-flowtype": "^2.30.3",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-prettier": "2.0.1",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.5.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-prettier": "^2.2.0",
     "jest": "19.0.2",
     "pre-commit": "1.2.2",
-    "prettier": "1.2.2"
+    "prettier": "^1.5.3"
   },
   "repository": {
     "type": "git",
