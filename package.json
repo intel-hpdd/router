@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@iml/jasmine-n-matchers": "2.1.1",
-    "babel-eslint": "7.2.3",
+    "babel-eslint": "8.0.0",
     "babel-preset-env": "^1.6.0",
     "eslint": "^4.5.0",
     "eslint-config-prettier": "^2.3.0",
