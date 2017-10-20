@@ -16,7 +16,7 @@
   "author": "IML Team",
   "license": "MIT",
   "dependencies": {
-    "path-to-regexp": "1.7.0"
+    "path-to-regexp": "2.1.0"
   },
   "devDependencies": {
     "@iml/jasmine-n-matchers": "2.1.1",
