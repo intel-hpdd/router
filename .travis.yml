@@ -1,13 +1,28 @@
 language: node_js
 node_js:
-- 6
-- 7
-cache: yarn
-deploy:
-  provider: npm
-  email: joe.grund@intel.com
-  api_key:
-    secure: MQjl6kvvk33JQUAHFgg3WapK6qEHtYevaxug60Tpwi7RMi4DlqmPJUYl+cfx2U+3r9Z7EEE9fLMLFQCcrJ9CfI2Hz4Db85NgaNPB8ILDuksY0cHsGh5Tvnnhw+FCQaB6meFFAeurS6q4gsV70IPyxkH+2cGx60zfivJSVPR0GYboIHRK/C8TWBMrw/0kQB3CfdQVsWLFo2BvH8XWp9k01pTb4kQy5rXQQINObU8oSrZWo2ekO5sdCziGDpof+mHmndezuA/dUzKGT1ny6K2SgTsYwyqFZv/9DA1DFZolU8BI9NK6+P/NKOQwhNioEG43OmubvgXZhLyRX5o25fSJeb/KQIyDMyginZ1/kqBC02DlbvexlgGs0zt++86oeCp8L4Rs1mRktQmpPOG7yozKy7nFjzvkjfvwx1Dcg1Rkrnz/2IuwG/Oq0cUyCDFFe0r2qzxckdRU09nlp8F572l3OJe/kAF2m2STmH7CwHhJTCm//xASD3JAzgkx6+6tuaJHqzJEhq2uGrvGqLTw9scs6hm0b1lVrYey4hgZRkImGZuWiZB6wjPY5sv1Zyj7PU+m26REnWjsAB23Q75TZStHSJxu36dkBuXdTuiY+MSxHUFMg2VipI+kOWZDS+8IAWRPxxbFdKJD9wcjPtxKLfXSWsakYzsFkfpxt06FbZMCOps=
-  on:
-    tags: true
-    repo: intel-hpdd/router
+  - 6
+  - 8
+  - 10
+jobs:
+  include:
+    - stage: test
+      env: Type='Lint & Test'
+      script:
+        - npm run eslint
+        - npm run test
+    - stage: deploy-npm
+      env: Type='npm Deploy'
+      before_deploy:
+        - npm i --ci
+        - npm run postversion
+      deploy:
+        provider: npm
+        skip_cleanup: true
+        email: "$NPM_EMAIL"
+        api_key: "$NPM_TOKEN"
+        on:
+          all_branches: true
+stages:
+  - test
+  - name: deploy-npm
+    if: branch =~ ^v\d+\.\d+\.\d+-1.*$

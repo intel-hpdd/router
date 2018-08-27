@@ -1,5 +1,7 @@
 /node_modules
+/dist
 *.iml
 *.log
 /coverage
 .nyc_output
+\.cache/

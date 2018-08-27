@@ -3,11 +3,11 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import pathRegexp from 'path-to-regexp';
-import pipeline from './pipeline';
+import pathRegexp from "path-to-regexp";
+import pipeline from "./pipeline";
 
-const verbs = ['get', 'post', 'put', 'patch', 'delete'];
-const verbsPlusAll = verbs.concat('all');
+const verbs = ["get", "post", "put", "patch", "delete"];
+const verbsPlusAll = verbs.concat("all");
 
 export default function getRouter() {
   const routes = [];
@@ -44,10 +44,8 @@ export default function getRouter() {
 
         const verb = req.verb.toLowerCase();
 
-        if (route.pathRouter.verbs[verb] != null)
-          routeActions = route.pathRouter.verbs[verb];
-        else if (route.pathRouter.verbs.all != null)
-          routeActions = route.pathRouter.verbs.all;
+        if (route.pathRouter.verbs[verb] != null) routeActions = route.pathRouter.verbs[verb];
+        else if (route.pathRouter.verbs.all != null) routeActions = route.pathRouter.verbs.all;
         else return false;
 
         req = Object.assign({}, req, {
@@ -57,15 +55,14 @@ export default function getRouter() {
 
         let pipes = start.concat(routeActions).concat(end);
 
-        if (typeof cb === 'function') pipes = pipes.concat(cb);
+        if (typeof cb === "function") pipes = pipes.concat(cb);
 
         pipeline(pipes, req, resp);
 
         return true;
       });
 
-      if (!matched)
-        throw new Error(`Route: ${path} does not match provided routes.`);
+      if (!matched) throw new Error(`Route: ${path} does not match provided routes.`);
 
       function keysToParams(keys, matches) {
         return keys.reduce((params, key, index) => {

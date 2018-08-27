@@ -4,30 +4,32 @@
   "main": "source/get-router.js",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
-    "test": "jest",
+    "test": "jest -c ./jest.config.js",
     "eslint": "eslint ./",
-    "cover": "NODE_ENV=test yarn test -- --coverage"
+    "cover": "NODE_ENV=test npm test -- --coverage",
+    "format": "prettier --write '**/*.js'",
+    "postversion": "rm -rf dist && parcel build source/get-router.js --log-level=3 --detailed-report"
   },
-  "pre-commit": ["eslint", "test"],
-  "jest": {
-    "coveragePathIgnorePatterns": ["/node_modules/", "/test"],
-    "transformIgnorePatterns": ["/node_modules/(?!@iml)/"]
-  },
+  "pre-commit": [
+    "eslint",
+    "test"
+  ],
+  "files": [
+    "dist/"
+  ],
   "author": "IML Team",
   "license": "MIT",
   "dependencies": {
-    "path-to-regexp": "1.7.0"
+    "path-to-regexp": "^2.4.0"
   },
   "devDependencies": {
-    "@iml/jasmine-n-matchers": "2.1.1",
-    "babel-eslint": "7.2.3",
+    "babel-eslint": "^8.2.6",
     "babel-preset-env": "^1.6.0",
-    "eslint": "^4.5.0",
-    "eslint-config-prettier": "^2.3.0",
+    "eslint": "^5.4.0",
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-prettier": "^2.2.0",
-    "jest": "19.0.2",
+    "jest": "^23.5.0",
+    "parcel-bundler": "^1.9.7",
     "pre-commit": "1.2.2",
     "prettier": "^1.5.3"
   },
