@@ -1,14 +1,14 @@
 {
   "name": "@iml/router",
-  "version": "6.1.0",
-  "main": "source/get-router.js",
+  "version": "6.1.1",
+  "main": "dist/get-router.js",
   "description": "A simple utility to route requests to actions.",
   "scripts": {
     "test": "jest -c ./jest.config.js",
     "eslint": "eslint ./",
     "cover": "NODE_ENV=test npm test -- --coverage",
     "format": "prettier --write '**/*.js'",
-    "postversion": "rm -rf dist && parcel build source/get-router.js --log-level=3 --detailed-report"
+    "postversion": "rm -rf dist && parcel build source/get-router.js"
   },
   "pre-commit": [
     "eslint",
