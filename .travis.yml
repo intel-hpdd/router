@@ -5,9 +5,7 @@ jobs:
       name: "Lint & Test"
       language: node_js
       node_js:
-        - 6
-        - 8
-        - 10
+        - "10"
       script:
         - npm run eslint
         - npm run test
@@ -15,7 +13,7 @@ jobs:
       name: "npm Deploy"
       language: node_js
       node_js:
-        - 6
+        - "10"
       before_deploy:
         - npm i --ci
         - npm run postversion
