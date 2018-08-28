@@ -6,12 +6,12 @@ node_js:
 jobs:
   include:
     - stage: test
-      env: Type='Lint & Test'
+      name: "Lint & Test"
       script:
         - npm run eslint
         - npm run test
     - stage: deploy-npm
-      env: Type='npm Deploy'
+      name: "npm Deploy"
       before_deploy:
         - npm i --ci
         - npm run postversion
