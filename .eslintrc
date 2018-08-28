@@ -1,29 +1,37 @@
 {
-  "parser": "babel-eslint",
-  "plugins": [
-    "flowtype",
-    "import",
-    "prettier"
-  ],
   "rules": {
-    "flowtype/define-flow-type": 1,
-    "flowtype/use-flow-type": 1,
-    "flowtype/space-after-type-colon": [
-        0,
-        "never"
-    ],
-    "import/no-commonjs": 2,
-    "import/no-amd": 2,
-    "import/export": 2,
-    "no-var": 2,
-    "linebreak-style": [
+    "linebreak-style": [2, "unix"],
+    "semi": [2, "always"],
+    "indent": [2, 2],
+    "no-console": 0,
+    "no-var": "error",
+    "no-unused-vars": "error",
+    "comma-dangle": ["error", "never"],
+    "no-func-assign": 0,
+    "no-constant-condition": 0,
+    "no-unsafe-finally": 0,
+    "no-multiple-empty-lines": [
       2,
-      "unix"
+      {
+        "max": 2,
+        "maxEOF": 1
+      }
     ],
-    "curly": [
-      2,
-      "multi",
-      "consistent"
+    "curly": [2, "multi", "consistent"],
+    "eol-last": [2, "unix"],
+    "eqeqeq": ["error", "allow-null"],
+    "camelcase": [
+      "error",
+      {
+        "properties": "never"
+      }
+    ],
+    "brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
     ],
     "prefer-const": [
       "error",
@@ -31,21 +39,25 @@
         "destructuring": "all",
         "ignoreReadBeforeAssign": false
       }
-    ],
-    "prettier/prettier": [
-      "error", {
-        "singleQuote": true
-      }
     ]
+  },
+  "globals": {
+    "describe": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "jasmine": false,
+    "spyOn": false,
+    "it": false,
+    "expect": false
   },
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
     "experimentalObjectRestSpread": true
-  },
-  "extends": ["eslint:recommended", "prettier"]
+  }
 }
