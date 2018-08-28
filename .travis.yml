@@ -13,7 +13,7 @@ jobs:
       name: "npm Deploy"
       language: node_js
       node_js:
-        - "10"
+        - "6"
       before_deploy:
         - npm i --ci
         - npm run postversion
